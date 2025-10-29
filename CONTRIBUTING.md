@@ -6,7 +6,7 @@ Thank you for your interest in contributing to this Aerospike project! We welcom
 
 ### **Did you find a bug?**
 
-- **Do not open up a GitHub issue if the bug is a security vulnerability**, and instead to refer to our [security policy](SECURITY.md)
+- **Do not open up a GitHub issue if the bug is a security vulnerability**, and instead refer to our [security policy](SECURITY.md)
 
 - If you're unable to find an open issue addressing the problem, Be sure to include a **title and clear description**, as much relevant information as possible, and a **code sample** or an **executable test case** demonstrating the expected behavior that is not occurring.
 
