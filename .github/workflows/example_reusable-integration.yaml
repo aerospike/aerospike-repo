@@ -92,7 +92,7 @@ jobs:
         run: |
           echo "TODO add packaging"
       - name: Upload packaged
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-artifacts
           path: build-artifacts
