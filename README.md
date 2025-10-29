@@ -41,6 +41,7 @@ For information on reporting security vulnerabilities, please see [SECURITY.md](
 ## Repo Tooling
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details on repo tooling and development environment setup.
+
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
