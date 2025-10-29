@@ -30,7 +30,7 @@ Trunk can also be run as a CLI. Once installed, you can run `trunk git-hooks syn
 
 ### Linter notes
 
-`kennylong.kubernetes-yaml-formatter`: Prettier and this yaml formatter disagree on some rules. If you have yaml format-on-save enabled with kennylong's extension, `trunk check|fmt` will complain about it.
+`kennylong.kubernetes-yaml-formatter`: **Do NOT install or enable this extension.** It is marked as unwanted in `.vscode/extensions.json` because it conflicts with Trunk and Prettier on YAML formatting rules. If you have yaml format-on-save enabled with kennylong's extension, `trunk check|fmt` will complain about it.
 
 `streetsidesoftware.code-spell-checker`: This isn't enabled via trunk and you should run it in your editor of choice. Trunk marks all misspelled words as errors, when they should properly be notes (blue squiggles, not red squiggles).
 
