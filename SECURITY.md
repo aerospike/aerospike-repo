@@ -14,7 +14,7 @@ The Aerospike team takes security bugs seriously. We appreciate your efforts to 
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please report them via email to **security@aerospike.com**.
+<!-- trunk-ignore(markdownlint/MD034) --> Instead, please report them via email to **security@aerospike.com**.
 
 You should receive a response within 48 hours. If for some reason you do not, please follow up via email to ensure we received your original message.
 
