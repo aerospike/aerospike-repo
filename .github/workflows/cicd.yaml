@@ -28,13 +28,13 @@ jobs:
 
       - name: Extract version
         id: extract
-        uses: aerospike/shared-workflows/.github/actions/extract-version-from-tag@74c474f40d62f9d2c1f90a8bc5df4b26cc5456d4 # post-v3.0.0
+        uses: aerospike/shared-workflows/.github/actions/extract-version-from-tag@462ba635ea5045e7282ce49eb665eec31454f3d4 # post-v3.0.0
 
   cicd:
     needs: extract-version
-    uses: aerospike/shared-workflows/.github/workflows/reusable_artifacts-cicd.yaml@74c474f40d62f9d2c1f90a8bc5df4b26cc5456d4 # post-v3.0.0
+    uses: aerospike/shared-workflows/.github/workflows/reusable_artifacts-cicd.yaml@462ba635ea5045e7282ce49eb665eec31454f3d4 # post-v3.0.0
     with:
-      gh-workflows-ref: 74c474f40d62f9d2c1f90a8bc5df4b26cc5456d4
+      gh-workflows-ref: 462ba635ea5045e7282ce49eb665eec31454f3d4
       jf-project: test
       jf-build-name: test-build
       version: ${{ needs.extract-version.outputs.version }}
