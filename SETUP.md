@@ -19,7 +19,6 @@ When you run `setup.sh`, these are replaced with your project's values.
 | `test-build`        | cicd.yaml (`jf-build-name`)      | JFrog build identifier                 |
 | `gh-dev-test`       | cicd.yaml (`oidc-provider-name`) | JFrog OIDC provider for GitHub Actions |
 | `aerospike/testing` | cicd.yaml (`oidc-audience`)      | OIDC audience claim                    |
-| `python`            | codeql.yml (`language`)          | CodeQL analysis language               |
 | `[PROJECT_NAME]`    | README.md, CONTRIBUTING.md       | Human-readable project name            |
 | `[REPOSITORY_NAME]` | README.md                        | GitHub repository name                 |
 | `CODEOWNERS`        | .github/CODEOWNERS               | Team/user who owns the code            |
@@ -103,9 +102,8 @@ are released.
 
 ## Workflows Overview
 
-| Workflow         | Trigger                   | Purpose                                    |
-| ---------------- | ------------------------- | ------------------------------------------ |
-| `cicd.yaml`      | Push to main, tags, PRs   | Build, sign, and deploy artifacts to JFrog |
-| `pr-hygiene.yml` | Pull requests             | Check for JIRA ticket in PR title          |
-| `codeql.yml`     | Push to main, PRs, weekly | CodeQL security analysis                   |
-| `trunk.yml`      | Push to main, PRs         | Trunk Check linting                        |
+| Workflow         | Trigger                 | Purpose                                    |
+| ---------------- | ----------------------- | ------------------------------------------ |
+| `cicd.yaml`      | Push to main, tags, PRs | Build, sign, and deploy artifacts to JFrog |
+| `pr-hygiene.yml` | Pull requests           | Check for JIRA ticket in PR title          |
+| `trunk.yml`      | Push to main, PRs       | Trunk Check linting                        |

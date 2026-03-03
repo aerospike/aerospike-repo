@@ -14,17 +14,26 @@ echo ""
 
 # --- Collect values ---
 
-read -rp "Project display name (e.g., 'Aerospike Client Python'): " PROJECT_NAME
-read -rp "Repository name (e.g., 'aerospike-client-python'): " REPO_NAME
-read -rp "JFrog project name (e.g., 'client-python'): " JF_PROJECT
-read -rp "JFrog build name (e.g., 'aerospike-client-python'): " JF_BUILD_NAME
-read -rp "OIDC provider name (e.g., 'gh-prod'): " OIDC_PROVIDER
-read -rp "OIDC audience (e.g., 'aerospike/client-python'): " OIDC_AUDIENCE
+REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
+echo "Repository: ${REPO_NAME}"
+echo ""
+
+read -rp "Project display name (default: ${REPO_NAME}): " PROJECT_NAME
+PROJECT_NAME="${PROJECT_NAME:-${REPO_NAME}}"
+
+read -rp "JFrog project name (default: test): " JF_PROJECT
+JF_PROJECT="${JF_PROJECT:-test}"
+
+read -rp "JFrog build name (default: test-build): " JF_BUILD_NAME
+JF_BUILD_NAME="${JF_BUILD_NAME:-test-build}"
+
+read -rp "OIDC provider name (default: gh-dev-test): " OIDC_PROVIDER
+OIDC_PROVIDER="${OIDC_PROVIDER:-gh-dev-test}"
+
+read -rp "OIDC audience (default: aerospike/testing): " OIDC_AUDIENCE
+OIDC_AUDIENCE="${OIDC_AUDIENCE:-aerospike/testing}"
 
 echo ""
-echo "CodeQL language options: cpp, csharp, go, java-kotlin, javascript-typescript, python, ruby, swift"
-read -rp "CodeQL language (e.g., 'python'): " CODEQL_LANG
-
 read -rp "GitHub CODEOWNERS (e.g., '@aerospike/team-name'): " CODEOWNERS_VALUE
 
 read -rp "Initial version (default: 0.0.1): " INITIAL_VERSION
@@ -58,11 +67,6 @@ replace_in_file "$CICD_FILE" "jf-build-name: test-build" "jf-build-name: ${JF_BU
 replace_in_file "$CICD_FILE" "oidc-provider-name: gh-dev-test" "oidc-provider-name: ${OIDC_PROVIDER}"
 replace_in_file "$CICD_FILE" "oidc-audience: aerospike/testing" "oidc-audience: ${OIDC_AUDIENCE}"
 
-# codeql.yml: replace language
-CODEQL_FILE=".github/workflows/codeql.yml"
-replace_in_file "$CODEQL_FILE" "language: \\[python\\]" "language: [${CODEQL_LANG}]"
-replace_in_file "$CODEQL_FILE" "/language:python" "/language:${CODEQL_LANG}"
-
 # --- Replace project name placeholders in markdown files ---
 
 find . -name "*.md" -not -path "./.git/*" -print0 | while IFS= read -r -d '' file; do
@@ -89,7 +93,6 @@ else
 fi
 
 echo "  Updated .github/workflows/cicd.yaml"
-echo "  Updated .github/workflows/codeql.yml"
 echo "  Updated markdown files with project name"
 echo "  Generated .github/CODEOWNERS"
 
