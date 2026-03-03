@@ -75,6 +75,19 @@ matrix-json: >-
   ]}
 ```
 
+## Versioning
+
+The CI/CD pipeline uses the `extract-version-from-tag` action to determine the
+artifact version. During setup you choose one of two strategies:
+
+- **VERSION file** (default) — The version is read from the `VERSION` file at
+  the repo root. Update this file when you want to bump the version.
+- **Git tags** — The version is extracted from git tags (e.g., `v1.2.3` becomes
+  `1.2.3`). Push a tag to trigger a versioned release.
+
+You can switch strategies at any time: delete the VERSION file to use tags, or
+create one to override tags.
+
 ## Dependabot
 
 The template has Dependabot configured for GitHub Actions updates.

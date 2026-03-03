@@ -27,6 +27,16 @@ read -rp "CodeQL language (e.g., 'python'): " CODEQL_LANG
 
 read -rp "GitHub CODEOWNERS (e.g., '@aerospike/team-name'): " CODEOWNERS_VALUE
 
+read -rp "Initial version (default: 0.0.1): " INITIAL_VERSION
+INITIAL_VERSION="${INITIAL_VERSION:-0.0.1}"
+
+echo ""
+echo "Version strategy:"
+echo "  1) VERSION file — version tracked in a file, update manually"
+echo "  2) Git tags — create v${INITIAL_VERSION} tag, delete VERSION file"
+read -rp "Choose [1/2] (default: 1): " VERSION_STRATEGY
+VERSION_STRATEGY="${VERSION_STRATEGY:-1}"
+
 echo ""
 echo "=== Applying configuration ==="
 
@@ -65,6 +75,18 @@ done
 cat > .github/CODEOWNERS <<EOF
 * ${CODEOWNERS_VALUE}
 EOF
+
+# --- Set up versioning ---
+
+if [[ "$VERSION_STRATEGY" == "2" ]]; then
+    rm -f VERSION
+    git tag "v${INITIAL_VERSION}"
+    echo "  Created git tag v${INITIAL_VERSION}"
+    echo "  Deleted VERSION file (using tag-based versioning)"
+else
+    echo "${INITIAL_VERSION}" > VERSION
+    echo "  Updated VERSION file to ${INITIAL_VERSION}"
+fi
 
 echo "  Updated .github/workflows/cicd.yaml"
 echo "  Updated .github/workflows/codeql.yml"
