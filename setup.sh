@@ -56,7 +56,11 @@ replace_in_file() {
     local old="$2"
     local new="$3"
     if [[ -f "$file" ]]; then
-        sed -i "s|${old}|${new}|g" "$file"
+        # Escape characters special in sed replacement: backslash, ampersand, delimiter
+        local new_escaped="${new//\\/\\\\}"
+        new_escaped="${new_escaped//&/\\&}"
+        new_escaped="${new_escaped//|/\\|}"
+        sed "s|${old}|${new_escaped}|g" "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
     fi
 }
 
@@ -69,9 +73,15 @@ replace_in_file "$CICD_FILE" "oidc-audience: aerospike/testing" "oidc-audience: 
 
 # --- Replace project name placeholders in markdown files ---
 
+PROJECT_NAME_ESCAPED="${PROJECT_NAME//\\/\\\\}"
+PROJECT_NAME_ESCAPED="${PROJECT_NAME_ESCAPED//&/\\&}"
+PROJECT_NAME_ESCAPED="${PROJECT_NAME_ESCAPED//|/\\|}"
+REPO_NAME_ESCAPED="${REPO_NAME//\\/\\\\}"
+REPO_NAME_ESCAPED="${REPO_NAME_ESCAPED//&/\\&}"
+REPO_NAME_ESCAPED="${REPO_NAME_ESCAPED//|/\\|}"
 find . -name "*.md" -not -path "./.git/*" -print0 | while IFS= read -r -d '' file; do
-    sed -i "s|\[PROJECT_NAME\]|${PROJECT_NAME}|g" "$file"
-    sed -i "s|\[REPOSITORY_NAME\]|${REPO_NAME}|g" "$file"
+    sed "s|\[PROJECT_NAME\]|${PROJECT_NAME_ESCAPED}|g" "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
+    sed "s|\[REPOSITORY_NAME\]|${REPO_NAME_ESCAPED}|g" "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
 done
 
 # --- Generate CODEOWNERS ---
@@ -84,8 +94,12 @@ EOF
 
 if [[ "$VERSION_STRATEGY" == "2" ]]; then
     rm -f VERSION
-    git tag "v${INITIAL_VERSION}"
-    echo "  Created git tag v${INITIAL_VERSION}"
+    if git rev-parse "v${INITIAL_VERSION}" >/dev/null 2>&1; then
+        echo "  Git tag v${INITIAL_VERSION} already exists; skipping tag creation"
+    else
+        git tag "v${INITIAL_VERSION}"
+        echo "  Created git tag v${INITIAL_VERSION}"
+    fi
     echo "  Deleted VERSION file (using tag-based versioning)"
 else
     echo "${INITIAL_VERSION}" > VERSION
