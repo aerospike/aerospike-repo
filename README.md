@@ -30,7 +30,6 @@ cd [REPOSITORY_NAME]
 ├── .github/
 │   ├── workflows/
 │   │   ├── cicd.yaml          # Artifacts CI/CD pipeline (build → sign → deploy)
-│   │   ├── codeql.yml         # CodeQL security analysis
 │   │   ├── pr-hygiene.yml     # JIRA ticket check on PRs
 │   │   └── trunk.yml          # Trunk Check linting
 │   └── dependabot.yml         # Dependabot configuration
