@@ -14,7 +14,9 @@ echo ""
 
 # --- Collect values ---
 
-REPO_NAME=$(basename "$(git rev-parse --show-toplevel)")
+REPO="$(git rev-parse --show-toplevel)"
+cd "$REPO"
+REPO_NAME=$(basename "$REPO")
 echo "Repository: ${REPO_NAME}"
 echo ""
 
@@ -36,18 +38,6 @@ OIDC_AUDIENCE="${OIDC_AUDIENCE:-aerospike/testing}"
 echo ""
 read -rp "GitHub CODEOWNERS (e.g., '@aerospike/team-name'): " CODEOWNERS_VALUE
 
-read -rp "Initial version (default: 0.0.1): " INITIAL_VERSION
-INITIAL_VERSION="${INITIAL_VERSION:-0.0.1}"
-
-echo ""
-echo "Version strategy:"
-echo "  1) VERSION file — version tracked in a file, update manually"
-echo "  2) Git tags — create v${INITIAL_VERSION} tag, delete VERSION file"
-read -rp "Choose [1/2] (default: 1): " VERSION_STRATEGY
-VERSION_STRATEGY="${VERSION_STRATEGY:-1}"
-
-echo ""
-echo "=== Applying configuration ==="
 
 # --- Replace CI/CD values in workflow files ---
 
@@ -90,34 +80,9 @@ cat > .github/CODEOWNERS <<EOF
 * ${CODEOWNERS_VALUE}
 EOF
 
-# --- Set up versioning ---
-
-if [[ "$VERSION_STRATEGY" == "2" ]]; then
-    rm -f VERSION
-    if git rev-parse "v${INITIAL_VERSION}" >/dev/null 2>&1; then
-        echo "  Git tag v${INITIAL_VERSION} already exists; skipping tag creation"
-    else
-        git tag "v${INITIAL_VERSION}"
-        echo "  Created git tag v${INITIAL_VERSION}"
-    fi
-    echo "  Deleted VERSION file (using tag-based versioning)"
-else
-    echo "${INITIAL_VERSION}" > VERSION
-    echo "  Updated VERSION file to ${INITIAL_VERSION}"
-fi
-
 echo "  Updated .github/workflows/cicd.yaml"
 echo "  Updated markdown files with project name"
 echo "  Generated .github/CODEOWNERS"
-
-# --- Cleanup prompt ---
-
-echo ""
-read -rp "Delete setup files (setup.sh and SETUP.md)? [y/N]: " DELETE_SETUP
-if [[ "${DELETE_SETUP,,}" == "y" ]]; then
-    rm -f setup.sh SETUP.md
-    echo "  Deleted setup.sh and SETUP.md"
-fi
 
 echo ""
 echo "=== Setup complete! ==="
@@ -128,20 +93,12 @@ echo "  1. Update the build-script in .github/workflows/cicd.yaml"
 echo "     The current script creates a dummy artifact. Replace it with your"
 echo "     actual build commands."
 echo ""
-echo "  2. Add required secrets to your GitHub repository settings:"
-echo "     - GPG_SECRET_KEY   (GPG private key for artifact signing)"
-echo "     - GPG_PUBLIC_KEY   (GPG public key)"
-echo "     - GPG_PASS         (GPG key passphrase)"
-echo ""
-echo "  3. (Optional) Add NuGet signing secrets if publishing .nupkg files:"
-echo "     - ES_USERNAME, ES_PASSWORD, CREDENTIAL_ID, ES_TOTP_SECRET"
-echo ""
-echo "  4. Uncomment your package ecosystem in .github/dependabot.yml"
+echo "  2. Uncomment your package ecosystem in .github/dependabot.yml"
 echo "     (pip, npm, gomod, or docker)"
 echo ""
-echo "  5. Review and customize README.md for your project"
+echo "  3. Review and customize README.md for your project"
 echo ""
-echo "  6. (Optional) Add matrix-json to cicd.yaml for multi-distro builds"
+echo "  4. (Optional) Add matrix-json to cicd.yaml for multi-distro builds"
 echo ""
 echo "For CI/CD documentation, see:"
-echo "  https://github.com/aerospike/shared-workflows"
+echo "  https://github.com/aerospike/shared-workflows/"
