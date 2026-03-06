@@ -1,19 +1,17 @@
-## Description
+# Description
 
-<!-- Provide a brief description of the changes in this PR -->
+<!-- Link to the relevant ticket (e.g., PROJ-123) and briefly describe what this PR does and why. -->
 
-## Changes Made
+## Changes
 
-<!-- List the main changes made in this PR -->
+<!-- Summarize the key changes. Bullet points work well for multiple changes. -->
 
-## Testing
+## How to Test
 
-<!-- Describe the tests you ran to verify your changes -->
+<!-- Steps a reviewer can follow to verify the changes work as expected. -->
 
-## Screenshots (if applicable)
+## Self-Review Checklist
 
-<!-- Add screenshots to help explain your changes -->
-
-## Additional Notes
-
-<!-- Add any additional notes for reviewers -->
+- [ ] Code follows project conventions
+- [ ] Tests added or updated as needed
+- [ ] No unrelated changes included
