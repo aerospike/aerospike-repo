@@ -1,13 +1,12 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    directories:
-      - /
+    directory: /
     schedule:
       interval: daily
     labels:
-      - "dependencies"
-      - "github-actions"
+      - dependencies
+      - github-actions
 
   # Add additional package ecosystems as needed for your project
   # Python dependencies (uncomment if using Python)
@@ -49,8 +48,3 @@ updates:
   #   labels:
   #     - "dependencies"
   #     - "docker"
-
-  - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: daily
