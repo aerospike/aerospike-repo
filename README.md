@@ -1,6 +1,6 @@
 # [PROJECT_NAME]
 
-> **Note:** This is a template repository. When creating a new repository from this template, replace `[PROJECT_NAME]` with your project name and update this README with your project-specific information.
+> **Note:** This is a template repository. When creating a new repository from this template, run `./setup.sh` to configure it for your project. See [SETUP.md](SETUP.md) for details.
 
 <!-- Brief description of what your project does -->
 
@@ -15,6 +15,9 @@
 git clone https://github.com/aerospike/[REPOSITORY_NAME].git
 cd [REPOSITORY_NAME]
 
+# If this is a new repo from the template, run the setup script first:
+./setup.sh
+
 # Add your setup steps here
 ```
 
@@ -25,9 +28,14 @@ cd [REPOSITORY_NAME]
 ```text
 .
 ├── .github/
-│   ├── workflows/       # GitHub Actions workflows
-│   └── dependabot.yml   # Dependabot configuration
-└── etc
+│   ├── workflows/
+│   │   ├── cicd.yaml          # Artifacts CI/CD pipeline (build → sign → deploy)
+│   │   ├── pr-hygiene.yml     # JIRA ticket check on PRs
+│   │   └── trunk.yml          # Trunk Check linting
+│   └── dependabot.yml         # Dependabot configuration
+├── setup.sh                   # Template setup script (delete after use)
+├── SETUP.md                   # Template customization guide (delete after use)
+└── ...
 ```
 
 ## Contributing
