@@ -27,6 +27,7 @@ echo ""
 
 # Preflight
 command -v gh &>/dev/null || { echo "Error: gh CLI not installed." >&2; exit 1; }
+command -v jq &>/dev/null || { echo "Error: jq not installed." >&2; exit 1; }
 gh auth status &>/dev/null || { echo "Error: gh not authenticated. Run 'gh auth login'." >&2; exit 1; }
 
 if [[ "$DRY_RUN" == false ]]; then
@@ -38,8 +39,9 @@ fi
 
 CHECKS='[{"context":"Trunk Check"},{"context":"validate-jira-ticket / hygiene-check"}]'
 
-RULESET_PAYLOAD="$(jq -n --argjson checks "$CHECKS" '{
-  name: "protect_main",
+# RepositoryRole actor_id 5 = built-in "Admin" role (1=Read..5=Admin)
+RULESET_PAYLOAD="$(jq -n --arg name "$RULESET_NAME" --argjson checks "$CHECKS" '{
+  name: $name,
   target: "branch",
   enforcement: "active",
   conditions: { ref_name: { include: ["~DEFAULT_BRANCH"], exclude: [] } },
