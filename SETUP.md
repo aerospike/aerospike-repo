@@ -132,7 +132,7 @@ baseline (`protect_default_branch_0001`). Only includes the delta:
 - Required review thread resolution
 - Squash-only merges
 - Required commit signatures
-- Required status checks (`Trunk Check` + `validate-jira-ticket`)
+- Required status checks (`Trunk Check` + `validate-jira-ticket / hygiene-check`)
 - Strict status checks (branch must be up to date)
 
 **Repository settings:**
