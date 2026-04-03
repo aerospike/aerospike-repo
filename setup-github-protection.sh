@@ -8,7 +8,8 @@ set -euo pipefail
 # Requires: gh CLI with admin access to the repo.
 
 RULESET_NAME="protect_main"
-REPO="$(git remote get-url origin 2>/dev/null | sed -E 's#.*[:/]([^/]+/[^/]+)$#\1#' | sed 's/\.git$//')"
+REMOTE_URL="$(git remote get-url origin 2>/dev/null || true)"
+REPO="$(printf '%s' "$REMOTE_URL" | sed -E 's#.*[:/]([^/]+/[^/]+)$#\1#' | sed 's/\.git$//')"
 [[ -z "$REPO" ]] && { echo "Error: cannot detect repo from git remote." >&2; exit 1; }
 
 DRY_RUN=false
