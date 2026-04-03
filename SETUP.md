@@ -59,7 +59,7 @@ build-script: |
 
 The script runs with these environment variables available:
 
-- `MATRIX_JSON` — JSON object with current matrix values (distro, arch, etc.)
+- `MATRIX_JSON`: JSON object with current matrix values (distro, arch, etc.)
 - Any variables from the `build-env` input
 - You **must** `export` variables for child processes (make, docker) to see them
 
@@ -81,9 +81,9 @@ matrix-json: >-
 The CI/CD pipeline uses the `extract-version-from-tag` action to determine the
 artifact version. During setup you choose one of two strategies:
 
-- **VERSION file** (default) — The version is read from the `VERSION` file at
+- **VERSION file** (default): The version is read from the `VERSION` file at
   the repo root. Update this file when you want to bump the version.
-- **Git tags** — The version is extracted from git tags (e.g., `v1.2.3` becomes
+- **Git tags**: The version is extracted from git tags (e.g., `v1.2.3` becomes
   `1.2.3`). Push a tag to trigger a versioned release.
 
 You can switch strategies at any time: delete the VERSION file to use tags, or
@@ -126,7 +126,7 @@ because it requires admin access and an authenticated `gh` CLI.
 
 ### What It Configures
 
-**Repo-level ruleset (`protect_main`)** — applied on top of the org-level
+**Repo-level ruleset (`protect_main`)**, applied on top of the org-level
 baseline (`protect_default_branch_0001`). Only includes the delta:
 
 - Required review thread resolution
@@ -140,20 +140,13 @@ baseline (`protect_default_branch_0001`). Only includes the delta:
 - Auto-delete head branches after merge
 - Only squash merges allowed (merge commits and rebase disabled)
 
-### Org vs Repo Ruleset Layering
-
-GitHub rulesets are **additive** — the most restrictive combination wins. The
-org already enforces deletion prevention, 1 required approver, dismiss stale
-reviews, code-owner review, and last-push approval. The repo-level ruleset
-only adds what the org does not cover.
-
 ### Manual Fallback
 
 If you cannot run the script, configure these settings manually:
 
-1. **Settings > Rules > Rulesets** — create a ruleset named `protect_main`
+1. **Settings > Rules > Rulesets**: create a ruleset named `protect_main`
    targeting the default branch with the rules listed above
-2. **Settings > General** — set "Allow squash merging" only, enable
+2. **Settings > General**: set "Allow squash merging" only, enable
    "Automatically delete head branches"
 
 ## Workflows Overview
