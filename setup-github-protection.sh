@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Configures branch-protection ruleset and repo-level settings via GitHub API.
-# This is a DELTA above the org-level ruleset which already covers deletion
+# This is a in addition to the org-level ruleset which already covers deletion
 # prevention, approvers, stale reviews, code-owner review, and last-push approval.
 #
 # Requires: gh CLI with admin access to the repo.
