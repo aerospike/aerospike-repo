@@ -16,54 +16,6 @@ Thank you for your interest in contributing to this Aerospike project! We welcom
 
 - Ensure the PR description clearly describes the problem and solution. Include the relevant issue number if applicable.
 
-## Pull Request Title Format
-
-With exceptions (see below) PR titles must follow conventional commit format:
-
-```yaml
-type(scope): description
-```
-
-### Default Rules
-
-- **type** is required and must be one of: `feat`, `fix`, `refactor`, `docs`, `test`, `ci`, `chore`, `build`, `perf`
-- **scope** is optional, lowercase, in parentheses
-- **description** starts with a lowercase letter
-
-### JIRA Ticket Requirement
-
-A JIRA ticket in square brackets is required for these types: **feat, fix, docs, ci, refactor**.
-
-These types do **not** require a JIRA ticket: **chore, test, build, perf**.
-
-You can also add the `skip-jira` label to a PR to bypass the JIRA check (commitlint still runs).
-
-### Examples
-
-```text
-feat(workflows): [INFRA-370] add integration test stage
-fix: [ENG-123] correct routing logic for edge cases
-docs(readme): [INFRA-451] update setup instructions
-ci: [INFRA-400] switch to shared reusable workflows
-chore(deps): bump shared-workflows to v3
-test: add unit tests for auth module
-```
-
-### Default Allowlisted Patterns
-
-The following PR title patterns bypass **both** commitlint type validation and the JIRA ticket requirement:
-
-- **Dependabot**: `chore(deps): bump ...` (any type with `deps` scope)
-- **StepSecurity**: `[StepSecurity] ...`
-- **Reverts**: `Revert "..."` or `revert: ...`
-- **Dependency bumps**: `Bump ...`
-
-### Enforcement
-
-This is enforced by the `pr-hygiene.yml` workflow which must pass before merge.
-See the [pr-hygiene documentation](https://github.com/aerospike/shared-workflows/blob/main/.github/workflows/pr-hygiene/README.md)
-for the full regex and configuration details.
-
 ## Development Setup
 
 ### Repo Tooling
@@ -82,7 +34,52 @@ Trunk can also be run as a CLI. Once installed, you can run `trunk git-hooks syn
 
 `streetsidesoftware.code-spell-checker`: This isn't enabled via trunk and you should run it in your editor of choice. Trunk marks all misspelled words as errors, when they should properly be notes (blue squiggles, not red squiggles).
 
-### Contributor
+### Pull Requests
+
+With exceptions (see below) PR titles must follow conventional commit format:
+
+```yaml
+type(scope): description
+```
+
+#### Default Rules
+
+- **type** is required and must be one of: `feat`, `fix`, `refactor`, `docs`, `test`, `ci`, `chore`, `build`, `perf`
+- **scope** is optional, lowercase, in parentheses
+- **description** starts with a lowercase letter
+
+#### JIRA Ticket Requirement
+
+A JIRA ticket in square brackets is required for these types: **feat, fix, docs, ci, refactor**.
+This rule can be disabled by using the `skip-jira` label on the PR (commitlint still runs).
+
+#### Examples
+
+```text
+feat(workflows): [INFRA-370] add integration test stage
+fix: [ENG-123] correct routing logic for edge cases
+docs(readme): [INFRA-451] update setup instructions
+ci: [INFRA-400] switch to shared reusable workflows
+chore(deps): bump shared-workflows to v3
+test: add unit tests for auth module
+```
+
+#### Default Allowlisted Patterns
+
+The following PR title patterns bypass **both** commitlint type validation and the JIRA ticket requirement:
+
+- **Dependabot**: `chore(deps): bump ...` (any type with `deps` scope)
+- **StepSecurity**: `[StepSecurity] ...`
+- **Reverts**: `Revert "..."` or `revert: ...`
+- **Dependency bumps**: `Bump ...`
+
+#### Enforcement
+
+This is enforced by the `pr-hygiene.yml` workflow which must pass before merge.
+See the [pr-hygiene documentation](https://github.com/aerospike/shared-workflows/blob/main/.github/workflows/pr-hygiene/README.md)
+for the full regex and configuration details.
+
+## Contributor
 
 This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 

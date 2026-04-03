@@ -36,16 +36,9 @@ cd [REPOSITORY_NAME]
 └── ...
 ```
 
-## Branch Protection and PR Hygiene
-
-This repository enforces squash-only merges, required PR title format
-(`type(scope): [JIRA-123] description`), and Trunk Check linting on all pull
-requests. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full PR title format
-and [SETUP.md](SETUP.md) for branch protection configuration details.
-
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute to this repository.
 
 ## Security
 
