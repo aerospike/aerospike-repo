@@ -35,7 +35,7 @@ fi
 
 # --- Payloads ---
 
-CHECKS='[{"context":"Trunk Check"},{"context":"validate-jira-ticket"}]'
+CHECKS='[{"context":"Trunk Check"},{"context":"validate-jira-ticket / hygiene-check"}]'
 
 RULESET_PAYLOAD="$(jq -n --argjson checks "$CHECKS" '{
   name: "protect_main",
