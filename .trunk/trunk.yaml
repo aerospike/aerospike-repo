@@ -17,7 +17,7 @@ runtimes:
 # This is the section where you manage your linters. (https://docs.trunk.io/check/configuration)
 lint:
   ignore:
-    - linters: [actionlint]
+    - linters: [checkov]
       paths:
         - .github/workflows/cicd-standard.yaml
         - .github/workflows/cicd-composable.yaml
