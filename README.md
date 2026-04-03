@@ -29,14 +29,19 @@ cd [REPOSITORY_NAME]
 .
 ├── .github/
 │   ├── workflows/
-│   │   ├── cicd.yaml          # Artifacts CI/CD pipeline (build → sign → deploy)
-│   │   ├── pr-hygiene.yml     # JIRA ticket check on PRs
-│   │   └── trunk.yml          # Trunk Check linting
-│   └── dependabot.yml         # Dependabot configuration
-├── setup.sh                   # Template setup script (delete after use)
-├── SETUP.md                   # Template customization guide (delete after use)
+│   │   ├── ...
+│   │   ├── pr-hygiene.yml        # JIRA ticket check on PRs
+│   │   └── trunk.yml             # Trunk Check linting
+│   └── dependabot.yml            # Dependabot configuration
 └── ...
 ```
+
+## Branch Protection and PR Hygiene
+
+This repository enforces squash-only merges, required PR title format
+(`type(scope): [JIRA-123] description`), and Trunk Check linting on all pull
+requests. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full PR title format
+and [SETUP.md](SETUP.md) for branch protection configuration details.
 
 ## Contributing
 

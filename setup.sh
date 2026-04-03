@@ -54,12 +54,13 @@ replace_in_file() {
     fi
 }
 
-# cicd.yaml: replace JFrog and OIDC values
-CICD_FILE=".github/workflows/cicd.yaml"
-replace_in_file "$CICD_FILE" "jf-project: test" "jf-project: ${JF_PROJECT}"
-replace_in_file "$CICD_FILE" "jf-build-name: test-build" "jf-build-name: ${JF_BUILD_NAME}"
-replace_in_file "$CICD_FILE" "oidc-provider-name: gh-dev-test" "oidc-provider-name: ${OIDC_PROVIDER}"
-replace_in_file "$CICD_FILE" "oidc-audience: aerospike/testing" "oidc-audience: ${OIDC_AUDIENCE}"
+# CI/CD workflow files: replace JFrog and OIDC values in both standard and composable
+for cicd_file in .github/workflows/cicd-standard.yaml .github/workflows/cicd-composable.yaml; do
+    replace_in_file "$cicd_file" "jf-project: test" "jf-project: ${JF_PROJECT}"
+    replace_in_file "$cicd_file" "jf-build-name: test-build" "jf-build-name: ${JF_BUILD_NAME}"
+    replace_in_file "$cicd_file" "oidc-provider-name: gh-dev-test" "oidc-provider-name: ${OIDC_PROVIDER}"
+    replace_in_file "$cicd_file" "oidc-audience: aerospike/testing" "oidc-audience: ${OIDC_AUDIENCE}"
+done
 
 # --- Replace project name placeholders in markdown files ---
 
@@ -80,7 +81,8 @@ cat > .github/CODEOWNERS <<EOF
 * ${CODEOWNERS_VALUE}
 EOF
 
-echo "  Updated .github/workflows/cicd.yaml"
+echo "  Updated .github/workflows/cicd-standard.yaml"
+echo "  Updated .github/workflows/cicd-composable.yaml"
 echo "  Updated markdown files with project name"
 echo "  Generated .github/CODEOWNERS"
 
@@ -89,16 +91,18 @@ echo "=== Setup complete! ==="
 echo ""
 echo "Remaining manual steps:"
 echo ""
-echo "  1. Update the build-script in .github/workflows/cicd.yaml"
-echo "     The current script creates a dummy artifact. Replace it with your"
-echo "     actual build commands."
+echo "  1. Uncomment and customize a CI/CD workflow:"
+echo "     - cicd-standard.yaml   (simple orchestrated pipeline)"
+echo "     - cicd-composable.yaml (custom steps between stages)"
+echo "     Replace the dummy build-script with your actual build commands."
 echo ""
 echo "  2. Uncomment your package ecosystem in .github/dependabot.yml"
 echo "     (pip, npm, gomod, or docker)"
 echo ""
 echo "  3. Review and customize README.md for your project"
 echo ""
-echo "  4. (Optional) Add matrix-json to cicd.yaml for multi-distro builds"
+echo "  4. (Admin) Run ./setup-github-protection.sh to configure"
+echo "     branch protection and repo settings (--dry-run to preview first)."
 echo ""
 echo "For CI/CD documentation, see:"
 echo "  https://github.com/aerospike/shared-workflows/"
