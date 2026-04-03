@@ -12,7 +12,14 @@ REPO="$(git remote get-url origin 2>/dev/null | sed -E 's#.*[:/]([^/]+/[^/]+)$#\
 [[ -z "$REPO" ]] && { echo "Error: cannot detect repo from git remote." >&2; exit 1; }
 
 DRY_RUN=false
-[[ "${1:-}" == "--dry-run" ]] && DRY_RUN=true
+if [[ $# -gt 0 ]]; then
+    if [[ "$1" == "--dry-run" ]]; then
+        DRY_RUN=true
+    else
+        echo "Usage: $(basename "$0") [--dry-run]" >&2
+        exit 1
+    fi
+fi
 
 echo "Repository: $REPO"
 echo ""
@@ -37,7 +44,12 @@ RULESET_PAYLOAD="$(jq -n --argjson checks "$CHECKS" '{
   conditions: { ref_name: { include: ["~DEFAULT_BRANCH"], exclude: [] } },
   rules: [
     { type: "pull_request", parameters: {
+        required_approving_review_count: 1,
+        dismiss_stale_reviews_on_push: true,
+        require_code_owner_review: true,
+        require_last_push_approval: true,
         required_review_thread_resolution: true,
+        required_reviewers: [],
         allowed_merge_methods: ["squash"]
     }},
     { type: "required_signatures" },
