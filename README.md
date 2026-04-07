@@ -29,18 +29,16 @@ cd [REPOSITORY_NAME]
 .
 ├── .github/
 │   ├── workflows/
-│   │   ├── cicd.yaml          # Artifacts CI/CD pipeline (build → sign → deploy)
-│   │   ├── pr-hygiene.yml     # JIRA ticket check on PRs
-│   │   └── trunk.yml          # Trunk Check linting
-│   └── dependabot.yml         # Dependabot configuration
-├── setup.sh                   # Template setup script (delete after use)
-├── SETUP.md                   # Template customization guide (delete after use)
+│   │   ├── ...
+│   │   ├── pr-hygiene.yml        # JIRA ticket check on PRs
+│   │   └── trunk.yml             # Trunk Check linting
+│   └── dependabot.yml            # Dependabot configuration
 └── ...
 ```
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for how to contribute to this repository.
 
 ## Security
 

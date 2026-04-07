@@ -1,6 +1,12 @@
+<!-- PR titles often follow: type(scope): [JIRA-123] description
+     Examples: feat(api): [ENG-456] add user endpoint
+               fix: [INFRA-789] correct deploy path
+     Some PR types, allowlisted patterns, or the `skip-jira` label are exceptions.
+     See CONTRIBUTING.md for the full title rules. -->
+
 # Description
 
-<!-- Link to the relevant ticket (e.g., PROJ-123) and briefly describe what this PR does and why. -->
+<!-- Briefly describe what this PR does and why. -->
 
 ## Changes
 
