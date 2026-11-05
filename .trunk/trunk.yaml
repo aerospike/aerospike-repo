@@ -22,7 +22,6 @@ lint:
     - linters: [checkov]
       paths:
         - .github/workflows/cicd-standard.yaml
-        - .github/workflows/cicd-composable.yaml
   enabled:
     - shfmt@3.14.1
     - dotenv-linter@4.0.0
