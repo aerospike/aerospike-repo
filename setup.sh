@@ -38,52 +38,47 @@ OIDC_AUDIENCE="${OIDC_AUDIENCE:-aerospike/testing}"
 echo ""
 read -rp "GitHub CODEOWNERS (e.g., '@aerospike/team-name'): " CODEOWNERS_VALUE
 
-
 # --- Replace CI/CD values in workflow files ---
 
 replace_in_file() {
-    local file="$1"
-    local old="$2"
-    local new="$3"
-    if [[ -f "$file" ]]; then
-        # Escape characters special in sed replacement: backslash, ampersand, delimiter
-        local new_escaped="${new//\\/\\\\}"
-        new_escaped="${new_escaped//&/\\&}"
-        new_escaped="${new_escaped//|/\\|}"
-        sed "s|${old}|${new_escaped}|g" "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
-    fi
+	local file="$1"
+	local old="$2"
+	local new="$3"
+	if [[ -f $file ]]; then
+		# Escape characters special in sed replacement: backslash, ampersand, delimiter
+		local new_escaped="${new//\\/\\\\}"
+		new_escaped="${new_escaped//&/\\&}"
+		new_escaped="${new_escaped//|/\\|}"
+		sed "s|${old}|${new_escaped}|g" "$file" >"${file}.tmp" && mv "${file}.tmp" "$file"
+	fi
 }
 
-# CI/CD workflow files: replace JFrog and OIDC values in both standard and composable
-for cicd_file in .github/workflows/cicd-standard.yaml .github/workflows/cicd-composable.yaml; do
-    replace_in_file "$cicd_file" "jf-project: test" "jf-project: ${JF_PROJECT}"
-    replace_in_file "$cicd_file" "jf-build-name: test-build" "jf-build-name: ${JF_BUILD_NAME}"
-    replace_in_file "$cicd_file" "oidc-provider-name: gh-dev-test" "oidc-provider-name: ${OIDC_PROVIDER}"
-    replace_in_file "$cicd_file" "oidc-audience: aerospike/testing" "oidc-audience: ${OIDC_AUDIENCE}"
-done
+cicd_file=.github/workflows/cicd-standard.yaml
+replace_in_file "$cicd_file" "jf-project: test" "jf-project: ${JF_PROJECT}"
+replace_in_file "$cicd_file" "jf-build-name: test-build" "jf-build-name: ${JF_BUILD_NAME}"
+replace_in_file "$cicd_file" "oidc-provider-name: gh-dev-test" "oidc-provider-name: ${OIDC_PROVIDER}"
+replace_in_file "$cicd_file" "oidc-audience: aerospike/testing" "oidc-audience: ${OIDC_AUDIENCE}"
 
 # --- Replace project name placeholders in markdown files ---
 
 PROJECT_NAME_ESCAPED="${PROJECT_NAME//\\/\\\\}"
 PROJECT_NAME_ESCAPED="${PROJECT_NAME_ESCAPED//&/\\&}"
 PROJECT_NAME_ESCAPED="${PROJECT_NAME_ESCAPED//|/\\|}"
-REPO_NAME_ESCAPED="${REPO_NAME//\\/\\\\}"
-REPO_NAME_ESCAPED="${REPO_NAME_ESCAPED//&/\\&}"
-REPO_NAME_ESCAPED="${REPO_NAME_ESCAPED//|/\\|}"
 find . -name "*.md" -not -path "./.git/*" -print0 | while IFS= read -r -d '' file; do
-    sed "s|\[PROJECT_NAME\]|${PROJECT_NAME_ESCAPED}|g" "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
-    sed "s|\[REPOSITORY_NAME\]|${REPO_NAME_ESCAPED}|g" "$file" > "${file}.tmp" && mv "${file}.tmp" "$file"
+	sed "s|\[PROJECT_NAME\]|${PROJECT_NAME_ESCAPED}|g" "$file" >"${file}.tmp" && mv "${file}.tmp" "$file"
 done
+
+sed '/^> \*\*Note:\*\* This is a template repository/,/^$/d' README.md >README.md.tmp && mv README.md.tmp README.md
 
 # --- Generate CODEOWNERS ---
 
-cat > .github/CODEOWNERS <<EOF
+cat >.github/CODEOWNERS <<EOF
 * ${CODEOWNERS_VALUE}
 EOF
 
 echo "  Updated .github/workflows/cicd-standard.yaml"
-echo "  Updated .github/workflows/cicd-composable.yaml"
 echo "  Updated markdown files with project name"
+echo "  Removed the template note from README.md"
 echo "  Generated .github/CODEOWNERS"
 
 echo ""
@@ -92,8 +87,7 @@ echo ""
 echo "Remaining manual steps:"
 echo ""
 echo "  1. Uncomment and customize a CI/CD workflow:"
-echo "     - cicd-standard.yaml   (simple orchestrated pipeline)"
-echo "     - cicd-composable.yaml (custom steps between stages)"
+echo "     - cicd-standard.yaml (simple orchestrated pipeline)"
 echo "     Replace the dummy build-script with your actual build commands."
 echo ""
 echo "  2. Uncomment your package ecosystem in .github/dependabot.yml"
