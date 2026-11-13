@@ -11,13 +11,6 @@
 <!-- Add project-specific setup instructions here -->
 
 ```bash
-# Clone the repository
-git clone https://github.com/aerospike/[REPOSITORY_NAME].git
-cd [REPOSITORY_NAME]
-
-# If this is a new repo from the template, run the setup script first:
-./setup.sh
-
 # Add your setup steps here
 ```
 

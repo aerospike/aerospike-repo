@@ -64,13 +64,11 @@ replace_in_file "$cicd_file" "oidc-audience: aerospike/testing" "oidc-audience: 
 PROJECT_NAME_ESCAPED="${PROJECT_NAME//\\/\\\\}"
 PROJECT_NAME_ESCAPED="${PROJECT_NAME_ESCAPED//&/\\&}"
 PROJECT_NAME_ESCAPED="${PROJECT_NAME_ESCAPED//|/\\|}"
-REPO_NAME_ESCAPED="${REPO_NAME//\\/\\\\}"
-REPO_NAME_ESCAPED="${REPO_NAME_ESCAPED//&/\\&}"
-REPO_NAME_ESCAPED="${REPO_NAME_ESCAPED//|/\\|}"
 find . -name "*.md" -not -path "./.git/*" -print0 | while IFS= read -r -d '' file; do
 	sed "s|\[PROJECT_NAME\]|${PROJECT_NAME_ESCAPED}|g" "$file" >"${file}.tmp" && mv "${file}.tmp" "$file"
-	sed "s|\[REPOSITORY_NAME\]|${REPO_NAME_ESCAPED}|g" "$file" >"${file}.tmp" && mv "${file}.tmp" "$file"
 done
+
+sed '/^> \*\*Note:\*\* This is a template repository/,/^$/d' README.md >README.md.tmp && mv README.md.tmp README.md
 
 # --- Generate CODEOWNERS ---
 
@@ -80,6 +78,7 @@ EOF
 
 echo "  Updated .github/workflows/cicd-standard.yaml"
 echo "  Updated markdown files with project name"
+echo "  Removed the template note from README.md"
 echo "  Generated .github/CODEOWNERS"
 
 echo ""
