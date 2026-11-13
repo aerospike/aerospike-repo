@@ -4,9 +4,6 @@ updates:
     directory: /
     schedule:
       interval: daily
-    labels:
-      - dependencies
-      - github-actions
 
   # Add additional package ecosystems as needed for your project
   # Python dependencies (uncomment if using Python)
@@ -15,9 +12,6 @@ updates:
   #   schedule:
   #     interval: "weekly"
   #   open-pull-requests-limit: 10
-  #   labels:
-  #     - "dependencies"
-  #     - "python"
 
   # Node.js dependencies (uncomment if using npm)
   # - package-ecosystem: "npm"
@@ -25,9 +19,6 @@ updates:
   #   schedule:
   #     interval: "weekly"
   #   open-pull-requests-limit: 10
-  #   labels:
-  #     - "dependencies"
-  #     - "javascript"
 
   # Go dependencies (uncomment if using Go)
   # - package-ecosystem: "gomod"
@@ -35,9 +26,6 @@ updates:
   #   schedule:
   #     interval: "weekly"
   #   open-pull-requests-limit: 10
-  #   labels:
-  #     - "dependencies"
-  #     - "go"
 
   # Docker dependencies (uncomment if using Docker)
   # - package-ecosystem: "docker"
@@ -45,6 +33,3 @@ updates:
   #   schedule:
   #     interval: "weekly"
   #   open-pull-requests-limit: 10
-  #   labels:
-  #     - "dependencies"
-  #     - "docker"
